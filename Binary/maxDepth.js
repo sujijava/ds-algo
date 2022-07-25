@@ -6,22 +6,18 @@ import { Tree } from "leetcode";
  * @return {number}
  */
 
-const bst = Tree.create([1, 2, 3, 4, null, 5, 6, 7]);
+const bst = Tree.create([1,2,2,3,3,null,null,4,4]);
 
-console.log(bst);
-
-function maxDepthHelper(root, depth) {
-  if (!root) {
-    return depth;
+var maxDepth = function(root) {
+  if(!root){
+    return 0
   }
+  //still very wondering why if(!root) return 0 is not executed for maxDepth(root.left)
 
-  if (root.right || root.left) {
-    let newDept = depth++;
-    return Math.max(
-      maxDepthHelper(root?.left, newDept),
-      maxDepthHelper(root?.right, newDept)
-    );
-  }
-}
+  let leftMax = maxDepth(root.left)
+  let rightMax = maxDepth(root.right)
 
-console.log(maxDepthHelper(bst.root, 0));
+  return Math.max(leftMax, rightMax) + 1
+};
+
+maxDepth(bst)
