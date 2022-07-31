@@ -5,36 +5,36 @@
  *     this.next = (next===undefined ? null : next)
  * }
  */
- function ListNode(val, next) {
-      this.val = (val===undefined ? 0 : val)
-      this.next = (next===undefined ? null : next)
- }
+function ListNode(val, next) {
+  this.val = val === undefined ? 0 : val;
+  this.next = next === undefined ? null : next;
+}
 /**
- * @param {ListNode} list1
- * @param {ListNode} list2
+ * @param {ListNode} a
+ * @param {ListNode} b
  * @return {ListNode}
  */
- var mergeTwoLists = function(list1, list2) {
+var mergeTwoLists = function (a, b) {
+  let dummyHeadOfNewMergedList = new ListNode();
+  let currentTailOfNewmergedList = dummyHeadOfNewMergedList;
 
-    let dummyHeadOfMergedList = new ListNode()
-    let mergedListTail = dummyHeadOfMergedList
-
-    while(list1 && list2){
-        if(list1.value < list2.value){
-            mergedListTail.next = list1
-            list1 = list1.next //list1 initialized?
-        }else {
-            mergedListTail.next = list2
-            list2 = list2.next //list2 initialized?
-        }
+  while (a && b) {
+    if (a.value < b.value) {
+      currentTailOfNewmergedList.next = a; //small value will be inserted to new merged list
+      a = a.next; //iteration
+    } else {
+      currentTailOfNewmergedList.next = b;
+      b = b.next; //iteration
     }
+  }
 
-    if(list1){
-        mergedListTail.next = list1
-    }
-    if(list2){
-        mergedListTail.next = list2
-    }
+  // if a or b ran out
+  if (a) {
+    currentTailOfNewmergedList.next = a;
+  }
+  if (b) {
+    currentTailOfNewmergedList.next = b;
+  }
 
-     return mergedListTail.next;
+  return currentTailOfNewmergedList.next;
 };
