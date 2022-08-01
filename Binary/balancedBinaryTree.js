@@ -6,28 +6,29 @@ import { Tree } from "leetcode";
  * @return {number}
  */
 
-const bst = Tree.create([1,2,2,3,3,null,null,4,4]);
-
-
-function height(root){
-
-  // base condition when binary tree is empty
-  if(root == null)
-      return 0
-  return Math.max(height(root.left), height(root.right)) + 1
-}
+const bst = Tree.create([1,2,null,null,4,3,null,null,5]);
 
 var isBalanced = function (root) {
+  const [ height, balanced ] = getHeight(root);
 
-  if(!root){
-    return 0
-  }
-  //still very wondering why if(!root) return 0 is not executed for maxDepth(root.left)
-
-  let leftHeight = height(root.left)
-  let rightHeight = height(root.right)
-
-  return leftHeight === rightHeight
+  return balanced;
 };
 
-isBalanced(bst)
+const getHeight = (root) => {
+  if (!root) return [-1, true];
+
+  let left = root.left
+  let right = root.right
+
+  const [leftHeight, leftBalanced] = getHeight(left);
+  const [rightHeight, rightBalanced] = getHeight(right);
+
+  const balanced =
+      leftBalanced &&
+      rightBalanced &&
+      Math.abs(leftHeight - rightHeight) < 2;
+
+  return [1 + Math.max(leftHeight, rightHeight), balanced];
+};
+
+console.log(isBalanced(bst))
